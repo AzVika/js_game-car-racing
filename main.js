@@ -4,11 +4,14 @@ const HEIGHT_ELEM = 100;
 const score = document.querySelector('.score'),
 	start = document.querySelector('.start'),
 	gameArea = document.querySelector('.gameArea'),
-	car = document.createElement('div');
+	car = document.createElement('div'),
+	topScore = document.getElementById('topScore');
 
 const audio = document.createElement('embed');
 audio.src = 'audio.mp3';
 audio.style.cssText = 'position: absolute; top: -1000;';
+
+// const crash = new Audio('audio2.mp3');
 
 car.classList.add('car');
 
@@ -26,14 +29,52 @@ const setting = {
 	start: false,
 	score: 0,
 	speed: 3,
-	traffic: 3
+	traffic: 3,
+	level: 0
 }
+
+let level = setting.level;
+
+const resultScore = parseInt(localStorage.getItem('racing_score', setting.score));
+topScore.textContent = resultScore ? resultScore : 0;
+
+function addLocalStorage () {
+	const result = parseInt(localStorage.getItem('racing_score', setting.score));
+	if(result < setting.score) {
+		console.log(resultScore);
+		console.log(setting.score);
+		localStorage.setItem('racing_score', setting.score);
+		topScore.textContent = setting.score;
+	}
+} 
+
 
 function getCountElements(heightElement) {
 	return gameArea.offsetHeight / heightElement + 1;
 }
 
-function startGame() {
+
+function startGame(e) {
+	const target = e.target;
+
+	if(target === start) return;
+
+	switch(target.id) {
+		case 'easy':
+			setting.speed = 3;
+			setting.traffic = 4;
+			break;
+		case 'medium':
+			setting.speed = 5;
+			setting.traffic = 3;
+			break;
+		case 'hard':
+			setting.speed = 8;
+			setting.traffic = 2;
+			break;
+	}
+
+
 	start.classList.add('hide');
 	gameArea.innerHTML = '';
 
@@ -71,8 +112,15 @@ function startGame() {
 	requestAnimationFrame(playGame);
 }
 
+
 function playGame() {
-	// console.log('Play game!');
+	setting.level = Math.floor(setting.score / 4000);
+
+	if(setting.level !== level) {
+		level = setting.level;
+		setting.speed++;
+	}
+
 	if(setting.start) {
 		setting.score += setting.speed;
 		score.textContent = 'SCORE:' + setting.score;
@@ -103,6 +151,7 @@ function playGame() {
 	}
 }
 
+
 function startRun(e) {
 	if(keys.hasOwnProperty(e.key)) {
 		e.preventDefault();
@@ -111,12 +160,14 @@ function startRun(e) {
 	
 }
 
+
 function stopRun(e) {
 	if(keys.hasOwnProperty(e.key)) {
 		e.preventDefault();
 		keys[e.key] = false;
 	}
 }
+
 
 function moveRoad() {
 	let lines = document.querySelectorAll('.line');
@@ -130,6 +181,7 @@ function moveRoad() {
 	});
 }
 
+
 function moveEnemy() {
 	let enemy = document.querySelectorAll('.enemy');
 	enemy.forEach(function(item) {
@@ -137,12 +189,14 @@ function moveEnemy() {
 		let enemyRect = item.getBoundingClientRect();
 
 		if(carRect.top + 5 <= enemyRect.bottom &&
-			carRect.right - 5 >= enemyRect.left &&
+			carRect.right >= enemyRect.left &&
 			carRect.left + 5 <= enemyRect.right &&
-			carRect.bottom - 5 >= enemyRect.top ) {
+			carRect.bottom >= enemyRect.top ) {
 			setting.start = false;
 			audio.remove();
 			console.warn('DTP');
+			// crash.play();
+			addLocalStorage();
 			start.classList.remove('hide');
 			start.style.top = score.offsetHeight;
 		}
