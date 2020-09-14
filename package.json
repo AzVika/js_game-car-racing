@@ -1,0 +1,25 @@
+{
+  "name": "jsgcr",
+  "version": "1.0.0",
+  "description": "Game \"Car racing\" (JavaScript)",
+  "main": "js/script.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AzVika/js_game-car-racing.git"
+  },
+  "author": "AzVika",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AzVika/js_game-car-racing/issues"
+  },
+  "homepage": "https://github.com/AzVika/js_game-car-racing#readme",
+  "devDependencies": {
+    "electron": "^10.1.1",
+    "electron-packager": "^15.1.0",
+    "path": "^0.12.7",
+    "url": "^0.11.0"
+  }
+}
