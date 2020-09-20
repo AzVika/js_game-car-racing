@@ -1,7 +1,9 @@
 const MAX_ENEMY = 7;
 const HEIGHT_ELEM = 100;
 
-const score = document.querySelector('.score'),
+const btnFirstStart = document.getElementById('firstStart'),
+	startInfo = document.querySelector('.start_info'),
+	score = document.querySelector('.score'),
 	start = document.querySelector('.start'),
 	gameArea = document.querySelector('.gameArea'),
 	car = document.createElement('div'),
@@ -13,7 +15,7 @@ const score = document.querySelector('.score'),
 const audioStart = document.createElement('audio');
 audioStart.src = 'audio/audio.mp3';
 audioStart.loop = true;
-audioStart.volume = 0.4;
+audioStart.volume = 0.5;
 audioStart.style.cssText = 'position: absolute; top: -1000;';
 
 
@@ -72,12 +74,13 @@ function getCountElements(heightElement) {
 
 
 function startGame(e) {
+	startInfo.classList.add('hide');
 	const target = e.target;
 
 	if(target === start) return;
 
 	switch(target.id) {
-		case 'easy':
+		case 'easy', 'firstStart':
 			setting.speed = 3;
 			setting.traffic = 4;
 			break;
@@ -118,7 +121,7 @@ function startGame(e) {
 		
 	}
 	
-	if(document.documentElement.clientWidth < 620) {
+	if(document.documentElement.clientWidth < 780) {
 		leftArrow.classList.remove('hide');
 		rigthArrow.classList.remove('hide');
 	}
@@ -267,6 +270,7 @@ function moveEnemy() {
 	});
 }
 
+btnFirstStart.addEventListener('click', startGame);
 
 start.addEventListener('click', startGame);
 
@@ -274,3 +278,5 @@ document.addEventListener('keydown', startRun);
 document.addEventListener('keyup', stopRun);
 document.addEventListener('mousedown', startRunArrow);
 document.addEventListener('mouseup', stopRunArrow);
+document.addEventListener('touchstart', startRunArrow);
+document.addEventListener('touchend', stopRunArrow);
