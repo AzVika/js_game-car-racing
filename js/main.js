@@ -54,14 +54,12 @@ const setting = {
 
 let level = setting.level;
 
-const resultScore = parseInt(localStorage.getItem('racing_score', setting.score));
+const resultScore = parseInt(localStorage.getItem('racing_score', setting.score)) || 0;
 topScore.textContent = resultScore ? resultScore : 0;
 
 function addLocalStorage () {
-	const result = parseInt(localStorage.getItem('racing_score', setting.score));
+	const result = parseInt(localStorage.getItem('racing_score', setting.score)) || 0;
 	if(result < setting.score) {
-		console.log(resultScore);
-		console.log(setting.score);
 		localStorage.setItem('racing_score', setting.score);
 		topScore.textContent = setting.score;
 	}
@@ -247,7 +245,6 @@ function moveEnemy() {
 			setting.start = false;
 			car.append(imgCrash);
 			audioStart.pause();
-			console.warn('DTP');
 			crash.play();
 			addLocalStorage();
 			start.classList.remove('hide');

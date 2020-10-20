@@ -20,18 +20,18 @@
 
 ###Команды в консоле
 
-<>
+```javascript
 npm init
-<>
+```
 
-###В package.json указать:
+###В package.json указаны:
 
 в "scripts": {"start": "electron ."}
 
 в "main": "js/script.js",
 
 
-###Установить пакеты:
+###Установлены пакеты:
 
 npm i -D electron@latest
 
@@ -43,9 +43,15 @@ npm i electron-packager -D
 
 ###Запускать:
 
+```javascript
 npm start
+```
 
+```javascript
 electron .
+```
 
+```javascript
 electron-packager .
+```
 
