@@ -3,6 +3,7 @@
 ## Интенсив от Glo Academy
 
 Запустить игру можно здесь https://prostovix.info/xxx/js-game-car-racing/
+
 По этой ссылке тоже можно поиграть в игру, но не происходит сохранения лучшего результата в localStorage https://azvika.github.io/js_game-car-racing/
 
 В ходе интенсива создана игра "Гонки" на чистом JavaScript.
